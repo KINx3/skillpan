@@ -36,6 +36,55 @@
   </header>
 
   <main class="wrap">
+    <!-- 처음이세요? 설치·사용 가이드 (접을 수 있음) -->
+    <details class="guide">
+      <summary class="guide__head">
+        <span class="guide__icon">⚡</span>
+        <span class="guide__title">스킬, 어떻게 쓰나요?</span>
+        <span class="guide__hint">3분이면 끝 · 눌러서 펼치기</span>
+      </summary>
+      <div class="guide__body">
+        <p class="guide__lead">
+          스킬 = 클로드에게 붙이는 <b>‘전문 능력 한 묶음’</b>이에요.
+          한 번 깔아두면, 평소처럼 말만 해도 클로드가 알맞은 스킬을 알아서 꺼내 써요.
+        </p>
+
+        <div class="guide__steps">
+          <div class="gstep">
+            <span class="gstep__no">1</span>
+            <div>
+              <h3>플러그인 마켓 <em>(제일 쉬워요)</em></h3>
+              <p>클로드 코드 입력창에 아래 한 줄을 붙여넣고, 뜨는 목록에서 골라 설치하면 끝.</p>
+              <pre class="cmd">/plugin marketplace add anthropics/skills</pre>
+              <p class="gstep__sub">공식·인기 스킬 대부분이 이 방식이에요.</p>
+            </div>
+          </div>
+          <div class="gstep">
+            <span class="gstep__no">2</span>
+            <div>
+              <h3>수동 폴더</h3>
+              <p>간단한 스킬은 <code>~/.claude/skills/</code> 폴더에 내려받기만 하면 돼요.</p>
+              <pre class="cmd">git clone &lt;주소&gt; ~/.claude/skills/이름</pre>
+            </div>
+          </div>
+          <div class="gstep">
+            <span class="gstep__no">3</span>
+            <div>
+              <h3>도구형</h3>
+              <p>일부 스킬은 명령어 한 줄로 설치돼요.</p>
+              <pre class="cmd">npx claude-mem install</pre>
+            </div>
+          </div>
+        </div>
+
+        <p class="guide__use">
+          🗣️ <b>쓰는 법은 더 쉬워요.</b> 설치하면 따로 부르는 명령어가 없어요 —
+          그냥 <b>“이 엑셀 정리해줘”</b>처럼 말하면 클로드가 알맞은 스킬을 자동으로 써요.
+          <br />아래 각 카드의 <b>‘설치법 보기’</b>에 그 스킬 <b>전용 설치 명령어</b>가 들어 있어요(복사 → 붙여넣기).
+        </p>
+      </div>
+    </details>
+
     <!-- 컨트롤: 검색 + 카테고리 필터 -->
     <section class="controls" aria-label="검색 및 필터">
       <div class="search">
@@ -48,6 +97,26 @@
     <!-- 스킬 카드 그리드 -->
     <section class="grid" id="grid" aria-live="polite"></section>
     <p class="empty" id="empty" hidden>그런 스킬은 아직 없어요. 다른 단어로 찾아보세요 🙂</p>
+
+    <!-- 더 찾고 싶다면: 큰 모음집(허브) -->
+    <section class="hub" aria-label="더 많은 스킬 모음">
+      <h2 class="hub__title">엄선은 여기까지 — 더 파고 싶다면</h2>
+      <p class="hub__sub">전 세계 스킬을 모아둔 큰 ‘모음집’들이에요. (영어, 양 많음 주의)</p>
+      <div class="hub__list">
+        <a class="hub__item" href="https://github.com/ComposioHQ/awesome-claude-skills" target="_blank" rel="noopener">
+          <span class="hub__name">awesome-claude-skills</span>
+          <span class="hub__meta">★ 6.5만 · 전 세계 스킬 큐레이션 목록</span>
+        </a>
+        <a class="hub__item" href="https://github.com/alirezarezvani/claude-skills" target="_blank" rel="noopener">
+          <span class="hub__name">alirezarezvani / claude-skills</span>
+          <span class="hub__meta">★ 1.8만 · 스킬·에이전트 337개 모음</span>
+        </a>
+        <a class="hub__item" href="https://github.com/davepoon/buildwithclaude" target="_blank" rel="noopener">
+          <span class="hub__name">buildwithclaude</span>
+          <span class="hub__meta">★ 3천 · 스킬·플러그인 한곳에 모은 허브</span>
+        </a>
+      </div>
+    </section>
   </main>
 
   <footer class="foot">

@@ -198,7 +198,99 @@ body {
 .foot b { color: var(--paper); }
 .foot__note { font-family: var(--font-mono); font-size: .78rem; color: #9C9082 !important; margin-top: 22px; line-height: 1.7; }
 
+/* ---------- 설치·사용 가이드 ---------- */
+.guide {
+  position: relative; z-index: 2;
+  background: var(--paper-2);
+  border: 2px solid var(--ink); border-radius: 18px;
+  margin: 24px 0 8px; overflow: hidden;
+}
+.guide__head {
+  list-style: none; cursor: pointer; user-select: none;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 18px 20px;
+}
+.guide__head::-webkit-details-marker { display: none; }
+.guide__icon { font-size: 1.3rem; }
+.guide__title { font-family: var(--font-display); font-weight: 400; font-size: 1.35rem; }
+.guide__hint {
+  margin-left: auto; font-family: var(--font-mono); font-size: .72rem;
+  color: var(--ink-soft); border: 1.5px dashed var(--line-2); border-radius: 100px; padding: 4px 11px;
+}
+.guide[open] .guide__head { border-bottom: 2px solid var(--line); }
+.guide__body { padding: 6px 20px 22px; }
+.guide__lead { font-size: 1rem; color: var(--ink); margin: 12px 0 22px; max-width: 46em; }
+.guide__lead b { color: var(--accent); }
+
+.guide__steps { display: grid; gap: 14px; grid-template-columns: repeat(3, 1fr); }
+.gstep {
+  display: flex; gap: 12px;
+  background: var(--paper); border: 1.5px solid var(--line); border-radius: 14px; padding: 16px;
+}
+.gstep__no {
+  flex: none; width: 28px; height: 28px; display: grid; place-items: center;
+  background: var(--ink); color: var(--paper); border-radius: 50%;
+  font-family: var(--font-mono); font-weight: 700; font-size: .88rem;
+}
+.gstep h3 { font-size: 1rem; font-weight: 700; margin-bottom: 5px; }
+.gstep h3 em { font-style: normal; color: var(--accent); font-size: .82rem; font-weight: 600; }
+.gstep p { font-size: .88rem; color: var(--ink-soft); margin-bottom: 8px; }
+.gstep__sub { font-size: .8rem !important; }
+.gstep code { font-family: var(--font-mono); font-size: .82rem; background: var(--line); padding: 1px 5px; border-radius: 5px; }
+
+.cmd {
+  font-family: var(--font-mono); font-size: .8rem; line-height: 1.55;
+  background: var(--ink); color: var(--paper-2);
+  padding: 10px 12px; border-radius: 9px; border-left: 3px solid var(--accent);
+  white-space: pre-wrap; word-break: break-all; overflow-x: auto;
+}
+.guide__use {
+  margin-top: 22px; padding: 16px 18px;
+  background: var(--paper); border-left: 3px solid var(--accent-2); border-radius: 0 10px 10px 0;
+  font-size: .95rem; color: var(--ink);
+}
+.guide__use b { color: var(--ink); }
+
+/* ---------- 카드별 설치법 ---------- */
+.how { margin-top: 14px; border-top: 1.5px dashed var(--line); padding-top: 10px; }
+.how summary {
+  list-style: none; cursor: pointer; user-select: none;
+  font-family: var(--font-mono); font-size: .76rem; font-weight: 700; color: var(--accent-2);
+  display: inline-flex; align-items: center; gap: 5px;
+}
+.how summary::-webkit-details-marker { display: none; }
+.how summary::before { content: "＋"; font-weight: 700; }
+.how[open] summary::before { content: "－"; }
+.how__body { margin-top: 10px; }
+.how__row { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+.copy {
+  font-family: var(--font-body); font-weight: 600; font-size: .76rem;
+  background: var(--ink); color: var(--paper); border: none; border-radius: 8px;
+  padding: 5px 12px; cursor: pointer; transition: background .15s; flex: none;
+}
+.copy:hover { background: var(--accent); }
+.how__hint { font-size: .74rem; color: var(--ink-soft); }
+.how__hint a { color: var(--accent-2); }
+
+/* ---------- 허브(더 찾기) ---------- */
+.hub { margin-top: 44px; padding-top: 30px; border-top: 2px solid var(--ink); }
+.hub__title { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.4rem, 4vw, 1.9rem); }
+.hub__sub { color: var(--ink-soft); font-size: .94rem; margin: 6px 0 18px; }
+.hub__list { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+.hub__item {
+  display: flex; flex-direction: column; gap: 4px; text-decoration: none;
+  background: var(--paper-2); border: 1.5px solid var(--line-2); border-radius: 14px;
+  padding: 15px 16px; transition: border-color .15s, transform .15s;
+}
+.hub__item:hover { border-color: var(--ink); transform: translate(-2px, -2px); box-shadow: 8px 8px 0 rgba(34,28,22,.06); }
+.hub__name { font-family: var(--font-mono); font-weight: 700; font-size: .92rem; color: var(--ink); }
+.hub__meta { font-size: .82rem; color: var(--ink-soft); }
+
+@media (max-width: 760px) {
+  .guide__steps { grid-template-columns: 1fr; }
+}
 @media (max-width: 560px) {
   .stamp { width: 74px; }
   .grid { grid-template-columns: 1fr; }
+  .guide__hint { display: none; }
 }
