@@ -1,17 +1,17 @@
 {
-  "Egonex-AI/Understand-Anything": 65530,
+  "Egonex-AI/Understand-Anything": 65532,
   "PleasePrompto/notebooklm-skill": 7139,
   "alonw0/web-asset-generator": 421,
-  "anthropics/skills": 153587,
+  "anthropics/skills": 153589,
   "bradautomates/claude-video": 2268,
   "coffeefuelbump/csv-data-summarizer-claude-skill": 410,
   "coleam00/second-brain-skills": 778,
   "emaynard/claude-family-history-research-skill": 84,
-  "multica-ai/andrej-karpathy-skills": 179843,
-  "nidhinjs/prompt-master": 9673,
-  "obra/superpowers": 235181,
+  "multica-ai/andrej-karpathy-skills": 179845,
+  "nidhinjs/prompt-master": 9674,
+  "obra/superpowers": 235189,
   "rampstackco/claude-skills": 367,
-  "thedotmack/claude-mem": 83604,
+  "thedotmack/claude-mem": 83605,
   "uxKero/anydesign": 113,
   "zarazhangrui/frontend-slides": 22443
 }
