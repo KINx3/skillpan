@@ -3,7 +3,7 @@
    링크·별(star)·설치법 gh 실측 검증(2026-06-22):
      anthropics/skills 153k · obra/superpowers 235k · claude-mem 83.5k
      · understand-anything 65.3k · claude-video 2.2k · prompt-master 9.66k · second-brain 778
-     · karpathy-skills(multica-ai) 180k
+     · karpathy-skills(multica-ai) 180k · notebooklm 7.1k · csv-summarizer 410 · rampstack 367 · anydesign 113
    설치법 3패턴: ①플러그인 마켓(/plugin marketplace add) ②수동 폴더(git clone ~/.claude/skills) ③도구형(npx)
    ============================================================ */
 
@@ -49,6 +49,12 @@ const SKILLS = [
     take:"흩어진 <b>PDF 합치고 표만 쏙</b> 뽑을 때.",
     src:"Anthropic 공식", url:DOCS, install:I_DOC },
 
+  { id:"csv-summarizer", name:"CSV 데이터 요약", cat:"doc", badge:"new", stars:"410",
+    desc:"CSV(엑셀류) 데이터를 한눈에 보이게 요약·정리해줘요.",
+    take:"<b>숫자 잔뜩인 표</b> 받았을 때 핵심만 쏙.",
+    src:"coffeefuelbump", url:"https://github.com/coffeefuelbump/csv-data-summarizer-claude-skill",
+    install:"git clone https://github.com/coffeefuelbump/csv-data-summarizer-claude-skill.git ~/.claude/skills/csv-summarizer" },
+
   { id:"canvas-design", name:"디자인 대신 해줌", cat:"design", badge:"official",
     desc:"포스터·카드뉴스 같은 이미지/PDF 비주얼을 코드로 만들어요.",
     take:"디자인 감각 없어도 결과물이 <b>‘디자인된’ 느낌</b>이 나요.",
@@ -73,6 +79,12 @@ const SKILLS = [
     desc:"p5.js로 흐름장·파티클 같은 ‘제너러티브 아트’를 코드로 만들어요.",
     take:"그림 감각 없어도 <b>알고리즘이 알아서</b> 패턴을 그려줘요.",
     src:"Anthropic 공식", url:DOCS, install:I_EX },
+
+  { id:"anydesign", name:"디자인 가이드 척척", cat:"design", badge:"new", stars:"113",
+    desc:"상황에 맞는 UI·그래픽 디자인을 제안하고 적용해줘요.",
+    take:"<b>디자인 어떻게 할지</b> 감 안 올 때 길잡이.",
+    src:"uxKero", url:"https://github.com/uxKero/anydesign",
+    install:"git clone https://github.com/uxKero/anydesign.git\ncp -r anydesign ~/.claude/skills/" },
 
   { id:"superpowers", name:"클로드 일잘러 모드", cat:"flow", badge:"popular", stars:"235k",
     desc:"막 코딩하지 않고 계획→테스트→검토 순서로 일하게 만들어요.",
@@ -120,6 +132,12 @@ const SKILLS = [
     take:"유명 AI 유튜버(Cole Medin)가 만든 <b>지식 정리 세트.</b>",
     src:"coleam00", url:"https://github.com/coleam00/second-brain-skills" },
 
+  { id:"notebooklm", name:"노트북LM에 자료 정리", cat:"research", badge:"pick", stars:"7.1k",
+    desc:"흩어진 자료를 모아 구글 노트북LM(NotebookLM)에 착착 넣어줘요.",
+    take:"<b>공부·리서치 자료</b> 한 곳에 모을 때.",
+    src:"PleasePrompto", url:"https://github.com/PleasePrompto/notebooklm-skill",
+    install:"git clone https://github.com/PleasePrompto/notebooklm-skill ~/.claude/skills/notebooklm" },
+
   { id:"doc-coauthoring", name:"문서 같이 쓰기", cat:"write", badge:"official",
     desc:"기획서·제안서 같은 문서를 단계별로 같이 써주는 방식이에요.",
     take:"<b>뭐부터 쓸지 막막한 문서</b>에.",
@@ -129,6 +147,12 @@ const SKILLS = [
     desc:"공지·보고·뉴스레터를 회사 톤에 맞춰 써줘요.",
     take:"<b>주간보고·공지 쓰기 싫을 때.</b>",
     src:"Anthropic 공식", url:DOCS, install:I_EX },
+
+  { id:"rampstack-brand", name:"브랜드 만들기", cat:"write", badge:"new", stars:"367",
+    desc:"이름·메시지·톤 같은 브랜드 기초를 같이 잡아줘요.",
+    take:"<b>1인 창업·사이드프로젝트</b> 브랜딩 막막할 때.",
+    src:"rampstackco", url:"https://github.com/rampstackco/claude-skills",
+    install:"/plugin marketplace add rampstackco/claude-skills\n/plugin install rampstack-skills@rampstack" },
 
   { id:"mcp-builder", name:"외부앱 연결(MCP)", cat:"dev", badge:"official",
     desc:"노션·슬랙 같은 외부 서비스를 클로드에 연결하는 다리를 만들어요.",
