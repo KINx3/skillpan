@@ -217,6 +217,7 @@ function fmtStars(n) {
 const grid = document.getElementById("grid");
 const chipsEl = document.getElementById("chips");
 const sortEl = document.getElementById("sort");
+const sourceEl = document.getElementById("source");
 const searchEl = document.getElementById("search");
 const emptyEl = document.getElementById("empty");
 document.getElementById("skill-count").textContent = SKILLS.length;
@@ -224,8 +225,11 @@ document.getElementById("skill-count").textContent = SKILLS.length;
 let activeCat = "all";
 let query = "";
 let sortMode = "rec"; // rec(추천순) · pop(인기순) · new(최신순)
+let sourceMode = "all"; // all · community(공식 제외) · official(공식만)
 
 const SORTS = [["rec", "추천순"], ["pop", "인기순"], ["new", "최신순"]];
+const SOURCES = [["all", "전체"], ["community", "커뮤니티"], ["official", "공식"]];
+const isOfficial = s => s.repo === "anthropics/skills";
 
 function buildChips() {
   const cats = [["all", { label: "전체" }], ...Object.entries(CATS)];
@@ -243,6 +247,15 @@ function buildSort() {
   ).join("");
   sortEl.querySelectorAll(".sortbtn").forEach(btn => {
     btn.addEventListener("click", () => { sortMode = btn.dataset.sort; buildSort(); render(); });
+  });
+}
+
+function buildSource() {
+  sourceEl.innerHTML = SOURCES.map(([key, label]) =>
+    `<button class="sortbtn" data-src="${key}" aria-pressed="${key === sourceMode}">${label}</button>`
+  ).join("");
+  sourceEl.querySelectorAll(".sortbtn").forEach(btn => {
+    btn.addEventListener("click", () => { sourceMode = btn.dataset.src; buildSource(); render(); });
   });
 }
 
@@ -303,8 +316,9 @@ function render() {
   const q = query.trim().toLowerCase();
   const list = applySort(SKILLS.filter(s => {
     const catOk = activeCat === "all" || s.cat === activeCat;
+    const srcOk = sourceMode === "all" || (sourceMode === "official" ? isOfficial(s) : !isOfficial(s));
     const text = (s.name + s.desc + s.take + s.id + CATS[s.cat].label).toLowerCase();
-    return catOk && (!q || text.includes(q));
+    return catOk && srcOk && (!q || text.includes(q));
   }));
   grid.innerHTML = list.map(cardHTML).join("");
   emptyEl.hidden = list.length > 0;
@@ -324,6 +338,7 @@ searchEl.addEventListener("input", e => { query = e.target.value; render(); });
 
 buildChips();
 buildSort();
+buildSource();
 render();
 // 별 라이브 갱신되면 다시 그림(인기순일 때 순서도 반영)
 loadStars().then(ok => { if (ok) render(); });

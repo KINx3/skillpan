@@ -128,8 +128,9 @@ body {
   background: var(--ink); color: var(--paper); border-color: var(--ink);
 }
 
-/* 정렬 바 */
-.sortbar { display: flex; align-items: center; gap: 10px; margin-top: 12px; }
+/* 정렬·출처 바 */
+.sortbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px; margin-top: 12px; }
+.filtergroup { display: flex; align-items: center; gap: 10px; }
 .sortbar__label {
   font-family: var(--font-mono); font-size: .72rem; letter-spacing: .12em;
   text-transform: uppercase; color: var(--ink-soft);
