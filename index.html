@@ -104,8 +104,23 @@
       </div>
     </section>
 
-    <!-- 스킬 카드 그리드 -->
-    <section class="grid" id="grid" aria-live="polite"></section>
+    <!-- ⭐ 직접 쓰는 추천 (천장) -->
+    <section class="tier" id="pick-tier" aria-label="직접 쓰는 추천">
+      <div class="tier__head">
+        <h2 class="tier__title">⭐ 직접 쓰는 추천</h2>
+        <p class="tier__sub">실제로 써보고, 지금 가장 자신 있게 권하는 것들이에요.</p>
+      </div>
+      <section class="grid" id="pick-grid" aria-live="polite"></section>
+    </section>
+
+    <!-- 📚 더 많은 스킬 (바닥/카탈로그) -->
+    <section class="tier" id="catalog-tier" aria-label="더 많은 스킬">
+      <div class="tier__head">
+        <h2 class="tier__title">📚 더 많은 스킬</h2>
+        <p class="tier__sub">추천 외 나머지 전부예요. 별 개수는 매일 자동 갱신돼요.</p>
+      </div>
+      <section class="grid" id="grid" aria-live="polite"></section>
+    </section>
     <p class="empty" id="empty" hidden>그런 스킬은 아직 없어요. 다른 단어로 찾아보세요 🙂</p>
 
     <!-- 더 찾고 싶다면: 큰 모음집(허브) -->

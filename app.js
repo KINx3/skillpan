@@ -104,7 +104,7 @@ const SKILLS = [
     take:"<b>브랜드 톤 맞춰야 할 때.</b>",
     src:"Anthropic 공식", url:DOCS, install:I_EX },
 
-  { id:"superpowers", name:"클로드 일잘러 모드", cat:"flow", badge:"popular", repo:"obra/superpowers", stars:234953, added:"2026-06-21",
+  { id:"superpowers", name:"클로드 일잘러 모드", cat:"flow", badge:"pick", repo:"obra/superpowers", stars:234953, added:"2026-06-21",
     desc:"막 코딩하지 않고 계획→테스트→검토 순서로 일하게 만들어요.",
     take:"결과물 퀄이 확 올라가요. <b>입문자 필수템.</b>",
     src:"Jesse Vincent", url:"https://github.com/obra/superpowers",
@@ -121,7 +121,7 @@ const SKILLS = [
     take:"<b>가장 강력한 스킬은 직접 만든 것</b> — 안트로픽 공식.",
     src:"Anthropic 공식", url:DOCS, install:I_EX },
 
-  { id:"prompt-master", name:"프롬프트 대신 써줌", cat:"flow", badge:"pick", repo:"nidhinjs/prompt-master", stars:9660, added:"2026-06-22",
+  { id:"prompt-master", name:"프롬프트 대신 써줌", cat:"flow", badge:"new", repo:"nidhinjs/prompt-master", stars:9660, added:"2026-06-22",
     desc:"어떤 AI 툴에든 ‘정확한 프롬프트’를 대신 작성해줘요.",
     take:"<b>뭐라고 시켜야 할지 막막할 때.</b> 시키는 말부터 잘 만들어줘요.",
     src:"nidhinjs", url:"https://github.com/nidhinjs/prompt-master",
@@ -139,7 +139,7 @@ const SKILLS = [
     src:"Egonex-AI", url:"https://github.com/Egonex-AI/Understand-Anything",
     install:"/plugin marketplace add Egonex-AI/Understand-Anything\n/plugin install understand-anything" },
 
-  { id:"notebooklm", name:"노트북LM에 자료 정리", cat:"research", badge:"pick", repo:"PleasePrompto/notebooklm-skill", stars:7138, added:"2026-06-22",
+  { id:"notebooklm", name:"노트북LM에 자료 정리", cat:"research", badge:"new", repo:"PleasePrompto/notebooklm-skill", stars:7138, added:"2026-06-22",
     desc:"흩어진 자료를 모아 구글 노트북LM(NotebookLM)에 착착 넣어줘요.",
     take:"<b>공부·리서치 자료</b> 한 곳에 모을 때.",
     src:"PleasePrompto", url:"https://github.com/PleasePrompto/notebooklm-skill",
@@ -215,6 +215,9 @@ function fmtStars(n) {
 
 /* ---------- 렌더링 ---------- */
 const grid = document.getElementById("grid");
+const pickGrid = document.getElementById("pick-grid");
+const pickTier = document.getElementById("pick-tier");
+const catalogTier = document.getElementById("catalog-tier");
 const chipsEl = document.getElementById("chips");
 const sortEl = document.getElementById("sort");
 const sourceEl = document.getElementById("source");
@@ -320,19 +323,26 @@ function render() {
     const text = (s.name + s.desc + s.take + s.id + CATS[s.cat].label).toLowerCase();
     return catOk && srcOk && (!q || text.includes(q));
   }));
-  grid.innerHTML = list.map(cardHTML).join("");
+  const picks = list.filter(s => s.badge === "pick");
+  const rest  = list.filter(s => s.badge !== "pick");
+  pickGrid.innerHTML = picks.map(cardHTML).join("");
+  grid.innerHTML = rest.map(cardHTML).join("");
+  pickTier.hidden = picks.length === 0;
+  catalogTier.hidden = rest.length === 0;
   emptyEl.hidden = list.length > 0;
 }
 
-// 설치 명령어 복사 (이벤트 위임 — 재렌더에도 유지)
-grid.addEventListener("click", e => {
+// 설치 명령어 복사 (이벤트 위임 — 재렌더에도 유지, 추천·카탈로그 두 그리드 공통)
+function onCopyClick(e) {
   const btn = e.target.closest(".copy");
   if (!btn) return;
   const cmd = btn.closest(".how__body").querySelector(".cmd").textContent;
   navigator.clipboard?.writeText(cmd);
   btn.textContent = "복사됨!";
   setTimeout(() => { btn.textContent = "복사"; }, 1400);
-});
+}
+grid.addEventListener("click", onCopyClick);
+pickGrid.addEventListener("click", onCopyClick);
 
 searchEl.addEventListener("input", e => { query = e.target.value; render(); });
 
