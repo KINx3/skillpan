@@ -191,6 +191,49 @@ const SKILLS = [
     desc:"리액트·디자인 컴포넌트로 진짜 작동하는 웹 화면·도구를 만들어요.",
     take:"<b>계산기·대시보드</b> 같은 내 전용 미니 앱을 뚝딱.",
     src:"Anthropic 공식", url:DOCS, install:I_EX },
+
+  /* ---- 2026-06-23 어썸리스트 스캔으로 추가(카탈로그) ---- */
+  { id:"career-ops", name:"AI 이직 비서", cat:"write", badge:"popular", repo:"santifer/career-ops", stars:55280, added:"2026-06-23",
+    desc:"이력서·자기소개서 작성부터 채용공고 탐색·지원 관리까지 한 곳에서 도와줘요.",
+    take:"<b>이직·구직이 막막할 때.</b> 이력서 다듬고 맞춤 자소서까지 척척.",
+    src:"santifer", url:"https://github.com/santifer/career-ops",
+    install:"/plugin marketplace add santifer/career-ops\n/plugin install career-ops@career-ops" },
+
+  { id:"scientific-skills", name:"과학·연구 스킬 147종", cat:"research", badge:"popular", repo:"K-Dense-AI/scientific-agent-skills", stars:29093, added:"2026-06-23",
+    desc:"유전체·신약·데이터 분석 등 연구용 스킬 147개를 한 번에 깔아줘요.",
+    take:"<b>논문·연구·데이터 분석</b>이 필요할 때. 연구실급 도구 모음.",
+    src:"K-Dense-AI", url:"https://github.com/K-Dense-AI/scientific-agent-skills",
+    install:"npx skills add K-Dense-AI/scientific-agent-skills" },
+
+  { id:"skill-seekers", name:"자료를 스킬로 변환", cat:"flow", badge:"popular", repo:"yusufkaraaslan/Skill_Seekers", stars:14233, added:"2026-06-23",
+    desc:"문서 사이트·깃허브·PDF를 통째로 읽어 ‘나만의 스킬’로 자동 변환해줘요.",
+    take:"공식 <b>스킬 제작</b>이 맨손 제작이면, 이건 <b>기존 자료를 통째로</b> 스킬화.",
+    src:"yusufkaraaslan", url:"https://github.com/yusufkaraaslan/Skill_Seekers",
+    install:"pip install skill-seekers" },
+
+  { id:"cc-tips-dx", name:"클로드 코드 꿀팁팩", cat:"flow", badge:"new", repo:"ykdojo/claude-code-tips", stars:8895, added:"2026-06-23",
+    desc:"클로드 코드 팁 43가지와, 자주 쓰는 작업을 묶은 ‘dx’ 플러그인이에요.",
+    take:"<b>클로드 코드 더 잘 쓰고 싶을 때.</b> 검증된 팁 43개를 한 번에.",
+    src:"ykdojo", url:"https://github.com/ykdojo/claude-code-tips",
+    install:"/plugin marketplace add ykdojo/claude-code-tips\n/plugin install dx@ykdojo" },
+
+  { id:"notfair", name:"SEO·광고 도우미", cat:"write", badge:"new", repo:"nowork-studio/NotFair", stars:2960, added:"2026-06-23",
+    desc:"검색 노출(SEO)·구글/메타 광고를 위한 마케팅 스킬 묶음이에요.",
+    take:"<b>내 가게·서비스 알리고 싶을 때.</b> 검색·광고 카피를 도와줘요.",
+    src:"nowork-studio", url:"https://github.com/nowork-studio/NotFair",
+    install:"/plugin marketplace add nowork-studio/notfair\n/plugin install notfair@nowork-studio" },
+
+  { id:"d3-viz", name:"데이터 차트 시각화", cat:"design", badge:"new", repo:"chrisvoncsefalvay/claude-d3js-skill", stars:198, added:"2026-06-23",
+    desc:"데이터를 d3.js 기반 인터랙티브 차트·그래프로 만들어줘요.",
+    take:"<b>숫자를 보기 좋은 그래프로.</b> 엑셀 차트보다 멋진 결과물.",
+    src:"chrisvoncsefalvay", url:"https://github.com/chrisvoncsefalvay/claude-d3js-skill",
+    install:"git clone https://github.com/chrisvoncsefalvay/claude-d3js-skill.git ~/.claude/skills/d3-viz" },
+
+  { id:"md-to-epub", name:"전자책(EPUB) 만들기", cat:"doc", badge:"new", repo:"smerchek/claude-epub-skill", stars:129, added:"2026-06-23",
+    desc:"마크다운·대화 정리·리서치 결과를 전자책(EPUB) 파일로 만들어줘요.",
+    take:"<b>긴 글을 킨들·이북으로.</b> 정리한 자료를 한 권으로 묶을 때.",
+    src:"smerchek", url:"https://github.com/smerchek/claude-epub-skill",
+    install:"git clone https://github.com/smerchek/claude-epub-skill.git\ncp -r claude-epub-skill/markdown-to-epub ~/.claude/skills/\npip install -r ~/.claude/skills/markdown-to-epub/requirements.txt" },
 ];
 
 /* ---------- 별 갱신 (stars.json — Action이 매일 자동 갱신) ---------- */
@@ -227,10 +270,11 @@ document.getElementById("skill-count").textContent = SKILLS.length;
 
 let activeCat = "all";
 let query = "";
-let sortMode = "rec"; // rec(추천순) · pop(인기순) · new(최신순)
+let sortMode = "rec"; // rec(추천순) · pop(인기순) · new(최신순) · like(좋아요순)
 let sourceMode = "all"; // all · community(공식 제외) · official(공식만)
+let likeCounts = {}; // { skill_id: count } — likes.js fetchAll로 채움
 
-const SORTS = [["rec", "추천순"], ["pop", "인기순"], ["new", "최신순"]];
+const SORTS = [["rec", "추천순"], ["pop", "인기순"], ["new", "최신순"], ["like", "좋아요순"]];
 const SOURCES = [["all", "전체"], ["community", "커뮤니티"], ["official", "공식"]];
 const isOfficial = s => s.repo === "anthropics/skills";
 
@@ -264,6 +308,7 @@ function buildSource() {
 
 function applySort(list) {
   if (sortMode === "pop") return [...list].sort((a, b) => b.stars - a.stars);
+  if (sortMode === "like") return [...list].sort((a, b) => (likeCounts[b.id] || 0) - (likeCounts[a.id] || 0));
   if (sortMode === "new") return [...list].sort((a, b) => (a.added < b.added ? 1 : a.added > b.added ? -1 : 0));
   return list; // 추천순 = 큐레이터가 정한 배열 순서
 }
@@ -297,6 +342,9 @@ function cardHTML(s, i) {
   const cat = CATS[s.cat];
   const badge = BADGES[s.badge];
   const stars = s.stars ? `<span class="stars">★ <b>${fmtStars(s.stars)}</b></span>` : `<span></span>`;
+  const liked = Likes.isLiked(s.id);
+  const lc = likeCounts[s.id];
+  const likeCount = (typeof lc === "number" && lc > 0) ? `<b class="like__count">${lc}</b>` : "";
   return `
     <article class="card" style="--cat:${cat.color}; animation-delay:${i * 40}ms">
       <div class="card__top">
@@ -308,7 +356,12 @@ function cardHTML(s, i) {
       <p class="card__desc">${s.desc}</p>
       <p class="take">${s.take}</p>
       <div class="card__foot">
-        ${stars}
+        <div class="metrics">
+          ${stars}
+          <button class="like ${liked ? "is-liked" : ""}" type="button" data-id="${s.id}" aria-pressed="${liked}" aria-label="좋아요">
+            <span class="like__heart">${liked ? "♥" : "♡"}</span>${likeCount}
+          </button>
+        </div>
         <a class="src" href="${s.url}" target="_blank" rel="noopener">${s.src} →</a>
       </div>
       ${installHTML(s)}
@@ -344,6 +397,45 @@ function onCopyClick(e) {
 grid.addEventListener("click", onCopyClick);
 pickGrid.addEventListener("click", onCopyClick);
 
+// 좋아요 — 버튼 상태/숫자 칠하기
+function paintLike(btn, liked, count) {
+  btn.classList.toggle("is-liked", liked);
+  btn.setAttribute("aria-pressed", liked);
+  btn.querySelector(".like__heart").textContent = liked ? "♥" : "♡";
+  if (typeof count === "number") {
+    let c = btn.querySelector(".like__count");
+    if (count > 0) {
+      if (!c) { c = document.createElement("b"); c.className = "like__count"; btn.appendChild(c); }
+      c.textContent = count;
+    } else if (c) {
+      c.remove(); // 0이면 숫자 숨김 (하트만)
+    }
+  }
+}
+
+// 좋아요 토글 (낙관적 → 서버 반영, 실패 시 되돌림) — 두 그리드 공용
+async function onLikeClick(e) {
+  const btn = e.target.closest(".like");
+  if (!btn) return;
+  const id = btn.dataset.id;
+  const wasLiked = Likes.isLiked(id);
+  const willLike = !wasLiked;
+  const cur = typeof likeCounts[id] === "number" ? likeCounts[id] : 0;
+  likeCounts[id] = Math.max(cur + (willLike ? 1 : -1), 0);
+  paintLike(btn, willLike, Likes.enabled() ? likeCounts[id] : undefined);
+  btn.classList.add("is-pulse");
+  setTimeout(() => btn.classList.remove("is-pulse"), 320);
+  const res = await Likes.toggle(id);
+  if (!res.ok) { // 서버 실패 → 원상복구
+    likeCounts[id] = cur;
+    paintLike(btn, wasLiked, Likes.enabled() ? cur : undefined);
+    return;
+  }
+  if (typeof res.count === "number") { likeCounts[id] = res.count; paintLike(btn, willLike, res.count); }
+}
+grid.addEventListener("click", onLikeClick);
+pickGrid.addEventListener("click", onLikeClick);
+
 searchEl.addEventListener("input", e => { query = e.target.value; render(); });
 
 buildChips();
@@ -352,3 +444,5 @@ buildSource();
 render();
 // 별 라이브 갱신되면 다시 그림(인기순일 때 순서도 반영)
 loadStars().then(ok => { if (ok) render(); });
+// 좋아요 수 불러오면 다시 그림(좋아요순 정렬·카운트 반영)
+Likes.fetchAll().then(map => { if (map) { likeCounts = map; render(); } });

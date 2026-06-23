@@ -201,8 +201,25 @@ body {
 .take b { color: var(--ink); font-weight: 600; }
 
 .card__foot { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-top: 4px; }
+.metrics { display: flex; align-items: center; gap: 12px; }
 .stars { font-family: var(--font-mono); font-size: .78rem; color: var(--ink-soft); }
 .stars b { color: var(--ink); }
+
+/* 좋아요 버튼 */
+.like {
+  font-family: var(--font-mono); font-size: .78rem; line-height: 1;
+  display: inline-flex; align-items: center; gap: 5px;
+  background: transparent; color: var(--ink-soft);
+  border: 1.5px solid var(--line-2); border-radius: 100px;
+  padding: 5px 11px; cursor: pointer; transition: all .15s;
+}
+.like:hover { border-color: var(--accent); color: var(--accent); }
+.like__heart { font-size: 1rem; line-height: 1; }
+.like__count { color: var(--ink); font-weight: 700; }
+.like.is-liked { background: #FCE9E1; border-color: var(--accent); color: var(--accent); }
+.like.is-liked .like__count { color: var(--accent); }
+.like.is-pulse .like__heart { animation: likepop .32s ease; }
+@keyframes likepop { 0% { transform: scale(1); } 40% { transform: scale(1.4); } 100% { transform: scale(1); } }
 .src {
   font-weight: 600; font-size: .86rem; color: var(--ink); text-decoration: none;
   display: inline-flex; align-items: center; gap: 5px;
