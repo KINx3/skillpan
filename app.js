@@ -270,11 +270,11 @@ document.getElementById("skill-count").textContent = SKILLS.length;
 
 let activeCat = "all";
 let query = "";
-let sortMode = "rec"; // rec(추천순) · pop(인기순) · new(최신순) · like(좋아요순)
+let sortMode = "rec"; // rec(기본순) · pop(인기순) · new(최신순) · like(좋아요순)
 let sourceMode = "all"; // all · community(공식 제외) · official(공식만)
 let likeCounts = {}; // { skill_id: count } — likes.js fetchAll로 채움
 
-const SORTS = [["rec", "추천순"], ["pop", "인기순"], ["new", "최신순"], ["like", "좋아요순"]];
+const SORTS = [["rec", "기본순"], ["pop", "인기순"], ["new", "최신순"], ["like", "좋아요순"]];
 const SOURCES = [["all", "전체"], ["community", "커뮤니티"], ["official", "공식"]];
 const isOfficial = s => s.repo === "anthropics/skills";
 
@@ -310,7 +310,7 @@ function applySort(list) {
   if (sortMode === "pop") return [...list].sort((a, b) => b.stars - a.stars);
   if (sortMode === "like") return [...list].sort((a, b) => (likeCounts[b.id] || 0) - (likeCounts[a.id] || 0));
   if (sortMode === "new") return [...list].sort((a, b) => (a.added < b.added ? 1 : a.added > b.added ? -1 : 0));
-  return list; // 추천순 = 큐레이터가 정한 배열 순서
+  return list; // 기본순 = 큐레이터가 정한 배열 순서
 }
 
 // 카드별 '설치법 보기' — 설치 명령어가 있으면 복사 버튼, 없으면 저장소 안내
