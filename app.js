@@ -241,6 +241,12 @@ const SKILLS = [
     take:"50줄 짤 걸 <b>한 줄로.</b> 코드는 절반, 비용·시간까지 줄어요.",
     src:"Dietrich Gebert", url:"https://github.com/DietrichGebert/ponytail",
     install:"/plugin marketplace add DietrichGebert/ponytail\n/plugin install ponytail@ponytail" },
+
+  { id:"obsidian", name:"옵시디언 노트 정리", cat:"research", badge:"popular", repo:"kepano/obsidian-skills", stars:44100, added:"2026-08-05",
+    desc:"옵시디언 노트를 클로드가 직접 만들고 고쳐줘요. 마크다운·표(Bases)·캔버스까지.",
+    take:"<b>노트가 쌓이기만 할 때.</b> 옵시디언 CEO가 직접 만든 스킬이라 믿음직.",
+    src:"Steph Ango", url:"https://github.com/kepano/obsidian-skills",
+    install:"/plugin marketplace add kepano/obsidian-skills\n/plugin install obsidian@obsidian-skills" },
 ];
 
 /* ---------- 별 갱신 (stars.json — Action이 매일 자동 갱신) ---------- */
