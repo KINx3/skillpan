@@ -234,6 +234,13 @@ const SKILLS = [
     take:"<b>긴 글을 킨들·이북으로.</b> 정리한 자료를 한 권으로 묶을 때.",
     src:"smerchek", url:"https://github.com/smerchek/claude-epub-skill",
     install:"git clone https://github.com/smerchek/claude-epub-skill.git\ncp -r claude-epub-skill/markdown-to-epub ~/.claude/skills/\npip install -r ~/.claude/skills/markdown-to-epub/requirements.txt" },
+
+  /* ---- 2026-08-05 추가 ---- */
+  { id:"ponytail", name:"게으른 고수 모드", cat:"flow", badge:"popular", repo:"DietrichGebert/ponytail", stars:96500, added:"2026-08-05",
+    desc:"클로드가 과하게 만들지 않게 잡아줘요. 이미 있는 기능부터 쓰고, 가장 단순한 답을 골라요.",
+    take:"50줄 짤 걸 <b>한 줄로.</b> 코드는 절반, 비용·시간까지 줄어요.",
+    src:"Dietrich Gebert", url:"https://github.com/DietrichGebert/ponytail",
+    install:"/plugin marketplace add DietrichGebert/ponytail\n/plugin install ponytail@ponytail" },
 ];
 
 /* ---------- 별 갱신 (stars.json — Action이 매일 자동 갱신) ---------- */
