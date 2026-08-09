@@ -5,16 +5,27 @@
 // "웹페이지 예쁘게 해줘" 같은 요청에 어느 스킬이 걸릴지 매번 달라진다.
 //
 // 이 스크립트는 각 SKILL.md 의 description 끝에 경계선 한 문장을 덧붙여 역할을 갈라준다.
-// 전부를 세 갈래로 욱여넣지는 않는다 — 성격이 다른 두 부류를 따로 다룬다.
 //
-//   PRIMARY   간판 3종. 서로의 담당을 명시한다.
-//               · 새로 만들 때        → design-taste-frontend
-//               · 색·폰트·스타일 고를 때 → ui-ux-pro-max
-//               · 만든 걸 다듬을 때     → impeccable
+// 핵심은 "하나만 골라라"가 아니다. 실제 디자인 작업은 여러 스킬이 겹쳐 돌아가는 게 정상이라
+// (브루탈리즘 랜딩 = 방향 + 미감 + 팔레트), 배타적인 축과 쌓이는 축을 구분해서 적는다.
 //
-//   SECONDARY 곁가지. 자기 전문 영역에서만 발동하고, 일반적인 프론트 작업은
-//             위 3종에 양보하도록 범위를 좁힌다. (스타일 프리셋, 이미지 생성,
-//             브랜드 자산, 스택 한정 구현 등)
+//   ■ 작업 주인 (배타) — 한 작업에 하나만. 이게 갈리지 않아서 매번 결과가 달랐다.
+//       · 새로 만들 때    → design-taste-frontend
+//       · 만든 걸 다듬을 때 → impeccable
+//
+//   ■ 얹히는 층 (스택) — 주인 위에 함께 켜진다. "대신"이 아니라 "밑에".
+//       · 참조 DB    → ui-ux-pro-max (팔레트·폰트 조합·스택별 디테일)
+//       · 미감 프리셋 → minimalist-ui, industrial-brutalist-ui
+//       · 규칙집     → high-end-visual-design
+//       · 구현 층    → ui-styling (shadcn·Radix·Tailwind)
+//       · 산출물 층  → design-system (토큰·컴포넌트 스펙)
+//       · 모션 층    → gpt-taste (GSAP 스크롤)
+//
+//   ■ 딴 물건 (양보) — 프론트 작업으로 오해받지만 결과물이 다르다. 범위를 좁힌다.
+//       · 이미지 생성 → imagegen-frontend-web/mobile, brandkit, banner-design, image-to-code
+//       · 브랜드 자산 → design (로고·CI·아이콘)
+//       · 특수 대상  → stitch-design-taste (Google Stitch), design-taste-frontend-v1 (구버전)
+//       · 중복       → redesign-existing-projects (impeccable 과 사실상 같은 일)
 //
 // 디자인과 무관하거나 겹치지 않는 스킬은 일부러 건드리지 않는다:
 //   full-output-enforcement(출력 길이), slides(발표자료), brand(브랜드 보이스·메시징)
@@ -36,71 +47,80 @@ import { homedir } from "node:os";
 // 모든 항목이 같은 마커를 쓰므로 --revert 가 한 갈래 코드로 전부 되돌린다.
 const MARKER = "Routing —";
 
-// 간판 3종 — 서로를 가리켜 담당을 나눈다.
-const PRIMARY = {
+// ■ 작업 주인 — 한 작업에 하나만. 배타적인 축은 여기뿐이다.
+const OWNERS = {
   "design-taste-frontend":
-    `${MARKER} prefer this skill when CREATING a new surface from scratch (new landing page, ` +
-    `portfolio, marketing site, a screen that does not exist yet). For picking colors, palettes, ` +
-    `or font pairings prefer ui-ux-pro-max. For refining an interface that already exists prefer impeccable.`,
-
-  "ui-ux-pro-max":
-    `${MARKER} prefer this skill when CHOOSING the visual vocabulary — colors, palettes, font ` +
-    `pairings, style direction, chart types, or stack-specific implementation details. For building ` +
-    `a new surface from scratch prefer design-taste-frontend. For refining an interface that already ` +
-    `exists prefer impeccable.`,
+    `${MARKER} owns CREATING a new surface from scratch (new landing page, portfolio, marketing site, ` +
+    `a screen that does not exist yet). For refining an interface that already exists prefer impeccable ` +
+    `instead. Stacking is expected, not an exception — pull in ui-ux-pro-max for concrete palettes and ` +
+    `font pairings, and a style preset when the brief names one.`,
 
   "impeccable":
-    `${MARKER} prefer this skill when REFINING an interface that already exists — critique, audit, ` +
-    `polish, animate, clarify, harden, adapt. For building a new surface from scratch prefer ` +
-    `design-taste-frontend. For picking colors or font pairings prefer ui-ux-pro-max.`,
+    `${MARKER} owns REFINING an interface that already exists — critique, audit, polish, animate, ` +
+    `clarify, harden, adapt. For building a new surface from scratch prefer design-taste-frontend ` +
+    `instead. Stacking is expected, not an exception — pull in ui-ux-pro-max when the fix needs ` +
+    `concrete colors or font pairings.`,
 };
 
-// 곁가지 — 자기 전문 영역으로 범위를 좁히고 일반 프론트 작업은 간판 3종에 양보시킨다.
-const SECONDARY = {
-  // 정면으로 겹치는 것들.
+// ■ 얹히는 층 — 주인 위에 함께 켜진다. "대신"이 아니라 "밑에".
+const LAYERS = {
+  "ui-ux-pro-max":
+    `${MARKER} a reference database, not a workflow — it STACKS with the workflow skills rather than ` +
+    `replacing them. Load it whenever a task needs concrete colors, palettes, font pairings, chart ` +
+    `types, or stack-specific detail, including while design-taste-frontend is building a new surface ` +
+    `or impeccable is refining an existing one. On its own it answers "which colors and fonts", not ` +
+    `"build me a page".`,
+
+  "high-end-visual-design":
+    `${MARKER} a supporting style rulebook that STACKS, not a primary router. Prefer ` +
+    `design-taste-frontend when building a new surface and impeccable when refining an existing one, ` +
+    `and apply this skill's rules underneath those rather than instead of them.`,
+
+  "gpt-taste":
+    `${MARKER} the GSAP scroll-motion layer, and it STACKS. When a page genuinely needs pinning, ` +
+    `scrubbing, or stacked scroll sequences, run it alongside design-taste-frontend or impeccable ` +
+    `rather than instead of them. Skip it when no scroll choreography is wanted.`,
+
+  "ui-styling":
+    `${MARKER} the implementation layer for shadcn/ui, Radix, and Tailwind, and it STACKS. On such a ` +
+    `stack, run it under design-taste-frontend or impeccable — they own the visual direction, this ` +
+    `owns how it is expressed in components. Skip it on projects that use none of those.`,
+
+  "design-system":
+    `${MARKER} owns token architecture and component specs, and it STACKS. Run it alongside ` +
+    `design-taste-frontend or impeccable when the work should leave behind reusable tokens or specs. ` +
+    `On its own it does not design a surface — for that, defer to those two.`,
+
+  // 미감 프리셋 — 브리프가 그 미감을 부를 때 주인 위에 얹는다.
+  "minimalist-ui":
+    `${MARKER} a style preset that STACKS. When the brief calls for a minimalist, editorial, or quiet ` +
+    `monochrome look, run it alongside design-taste-frontend (building new) or impeccable (refining) ` +
+    `as the aesthetic layer, not instead of them. Skip it when the brief calls for a different look.`,
+
+  "industrial-brutalist-ui":
+    `${MARKER} a style preset that STACKS. When the brief calls for a brutalist, industrial, terminal, ` +
+    `or blueprint look, run it alongside design-taste-frontend (building new) or impeccable (refining) ` +
+    `as the aesthetic layer, not instead of them. Skip it when the brief calls for a different look.`,
+};
+
+// ■ 딴 물건 — 프론트 작업으로 오해받지만 결과물이 다르다. 범위를 좁혀 양보시킨다.
+const NARROWED = {
   "redesign-existing-projects":
     `${MARKER} overlaps heavily with impeccable. Prefer impeccable for auditing or refining an ` +
     `interface that already exists. Use this skill only when the user explicitly asks for a full ` +
     `visual upgrade of a legacy project.`,
 
-  "high-end-visual-design":
-    `${MARKER} a supporting style rulebook, not a primary router. Prefer design-taste-frontend when ` +
-    `building a new surface and impeccable when refining an existing one, and apply this skill's ` +
-    `rules underneath those rather than instead of them.`,
-
-  "gpt-taste":
-    `${MARKER} use only when the user explicitly asks for GSAP scroll animation or names this skill. ` +
-    `For building a new surface prefer design-taste-frontend. For refining an existing one prefer impeccable.`,
-
   "design-taste-frontend-v1":
     `${MARKER} superseded. Prefer design-taste-frontend (v2) unless the user explicitly asks for v1 behavior.`,
 
-  "ui-styling":
-    `${MARKER} use only for shadcn/ui, Radix, or Tailwind component implementation. For overall visual ` +
-    `direction prefer design-taste-frontend when building new, ui-ux-pro-max when picking colors or ` +
-    `fonts, and impeccable when refining.`,
-
   "design":
     `${MARKER} use only for brand identity deliverables — logos, corporate identity, icons, social ` +
-    `images, banners. For frontend interface work prefer design-taste-frontend when building new, ` +
-    `ui-ux-pro-max when picking colors or fonts, and impeccable when refining.`,
-
-  "design-system":
-    `${MARKER} use only for token architecture and component specifications. For designing or refining ` +
-    `an actual interface prefer design-taste-frontend, ui-ux-pro-max, or impeccable.`,
+    `images, banners. For frontend interface work prefer design-taste-frontend when building new and ` +
+    `impeccable when refining, with ui-ux-pro-max layered in for colors and fonts.`,
 
   "stitch-design-taste":
     `${MARKER} use only for Google Stitch, or when the user explicitly asks to generate a DESIGN.md. ` +
-    `For ordinary frontend work prefer design-taste-frontend, ui-ux-pro-max, or impeccable.`,
-
-  // 특정 미감 프리셋 — 그 미감을 명시적으로 요청했을 때만.
-  "minimalist-ui":
-    `${MARKER} a style preset. Use only when the user explicitly asks for a minimalist or editorial ` +
-    `look. Otherwise prefer design-taste-frontend when building new and impeccable when refining.`,
-
-  "industrial-brutalist-ui":
-    `${MARKER} a style preset. Use only when the user explicitly asks for a brutalist, industrial, or ` +
-    `terminal look. Otherwise prefer design-taste-frontend when building new and impeccable when refining.`,
+    `For ordinary frontend work prefer design-taste-frontend or impeccable.`,
 
   // 코드가 아니라 이미지를 만드는 것들 — 디자인 요청으로 오해되기 쉽다.
   "imagegen-frontend-web":
@@ -124,7 +144,7 @@ const SECONDARY = {
     `design-taste-frontend, ui-ux-pro-max, or impeccable.`,
 };
 
-const PATCHES = { ...PRIMARY, ...SECONDARY };
+const PATCHES = { ...OWNERS, ...LAYERS, ...NARROWED };
 
 const skillsRoot = process.env.CLAUDE_SKILLS_DIR || join(homedir(), ".claude", "skills");
 const mode = process.argv.includes("--revert") ? "revert"
