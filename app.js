@@ -247,6 +247,19 @@ const SKILLS = [
     take:"<b>노트가 쌓이기만 할 때.</b> 옵시디언 CEO가 직접 만든 스킬이라 믿음직.",
     src:"Steph Ango", url:"https://github.com/kepano/obsidian-skills",
     install:"/plugin marketplace add kepano/obsidian-skills\n/plugin install obsidian@obsidian-skills" },
+
+  /* ---- 2026-08-09 추가 ---- */
+  { id:"taste-skill", name:"AI 티 빼주는 웹디자인", cat:"design", badge:"popular", repo:"Leonxlnx/taste-skill", stars:74400, added:"2026-08-09",
+    desc:"랜딩페이지·포트폴리오를 ‘템플릿 티’ 안 나게 만들어줘요. 여백·글꼴·움직임까지 잡아줘요.",
+    take:"바이브코딩 결과가 <b>딱 봐도 AI가 만든 느낌</b>일 때. 기존 사이트 리디자인에도 좋아요.",
+    src:"Leonxlnx", url:"https://github.com/Leonxlnx/taste-skill",
+    install:"npx skills add https://github.com/Leonxlnx/taste-skill" },
+
+  { id:"ui-ux-pro-max", name:"UI·UX 디자인 사전", cat:"design", badge:"popular", repo:"nextlevelbuilder/ui-ux-pro-max-skill", stars:114800, added:"2026-08-09",
+    desc:"스타일 67종·색조합 161종·폰트조합 57종을 담은 사전에서 골라 화면을 설계해줘요.",
+    take:"<b>“무슨 색, 무슨 폰트?”</b> 고민 끝. 리액트·플러터 등 21개 환경에 맞춰 코드까지.",
+    src:"nextlevelbuilder", url:"https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+    install:"npm install -g ui-ux-pro-max-cli\nuipro init --ai claude" },
 ];
 
 /* ---------- 별 갱신 (stars.json — Action이 매일 자동 갱신) ---------- */
