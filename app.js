@@ -260,6 +260,12 @@ const SKILLS = [
     take:"<b>“무슨 색, 무슨 폰트?”</b> 고민 끝. 리액트·플러터 등 21개 환경에 맞춰 코드까지.",
     src:"nextlevelbuilder", url:"https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
     install:"npm install -g ui-ux-pro-max-cli\nuipro init --ai claude" },
+
+  { id:"impeccable", name:"디자인 감수 23종", cat:"design", badge:"popular", repo:"pbakaus/impeccable", stars:57100, added:"2026-08-09",
+    desc:"만든 화면을 ‘다듬기·감수·군더더기 빼기’ 같은 23가지 명령으로 손봐줘요. AI 특유의 촌스러운 패턴 59가지도 자동으로 잡아내요.",
+    take:"만드는 것보다 <b>고치는 게 더 어려울 때.</b> <code>/impeccable init</code> 한 번이면 준비 끝.",
+    src:"Paul Bakaus", url:"https://github.com/pbakaus/impeccable",
+    install:"npx impeccable install\n/impeccable init" },
 ];
 
 /* ---------- 별 갱신 (stars.json — Action이 매일 자동 갱신) ---------- */
